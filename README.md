@@ -1,0 +1,2 @@
+# LogMessenger
+LogMessenger is a project built using React and Firebase. It aims to create a real-time chat application where users can communicate with each other. React, a JavaScript library, is used for building the user interface, while Firebase provides the backend infrastructure and real-time data synchronization. The app likely includes features such as user authentication, chat room creation, and messaging functionality. Overall, the project combines the power of React and Firebase to deliver an interactive and dynamic chat experience.
