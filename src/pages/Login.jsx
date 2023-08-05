@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
 const Login = () => {
-  const [err, setErr] = useState(false);
+  const [err, setErr] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,19 +16,19 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/")
     } catch (err) {
-      setErr(true);
+      setErr(err.message.substring("Firebase: ".length));
     }
   };
   return (
     <div className="formContainer">
       <div className="formWrapper">
-        <span className="logo">Lama Chat</span>
+        <span className="logo">LogMessenger</span>
         <span className="title">Login</span>
         <form onSubmit={handleSubmit}>
           <input type="email" placeholder="email" />
           <input type="password" placeholder="password" />
           <button>Sign in</button>
-          {err && <span>Something went wrong</span>}
+          {err !== null && <span>{err}</span>}
         </form>
         <p>You don't have an account? <Link to="/register">Register</Link></p>
       </div>

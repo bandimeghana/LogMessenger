@@ -7,7 +7,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
-  const [err, setErr] = useState(false);
+  const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -18,6 +18,7 @@ const Register = () => {
     const email = e.target[1].value;
     const password = e.target[2].value;
     const file = e.target[3].files[0];
+
 
     try {
       //Create user
@@ -48,13 +49,13 @@ const Register = () => {
             navigate("/");
           } catch (err) {
             console.log(err);
-            setErr(true);
+            setErr(err.message.substring("Firebase: ".length));
             setLoading(false);
           }
         });
       });
     } catch (err) {
-      setErr(true);
+      setErr(err.message.substring("Firebase: ".length));
       setLoading(false);
     }
   };
@@ -62,12 +63,12 @@ const Register = () => {
   return (
     <div className="formContainer">
       <div className="formWrapper">
-        <span className="logo">Lama Chat</span>
+        <span className="logo">LogMessenger</span>
         <span className="title">Register</span>
         <form onSubmit={handleSubmit}>
-          <input required type="text" placeholder="display name" />
-          <input required type="email" placeholder="email" />
-          <input required type="password" placeholder="password" />
+          <input required type="text" placeholder="display name" /> 
+          <input required type="email" placeholder="email" /> 
+          <input required type="password" placeholder="password" /> 
           <input required style={{ display: "none" }} type="file" id="file" />
           <label htmlFor="file">
             <img src={Add} alt="" />
@@ -75,7 +76,7 @@ const Register = () => {
           </label>
           <button disabled={loading}>Sign up</button>
           {loading && "Uploading and compressing the image please wait..."}
-          {err && <span>Something went wrong</span>}
+          {err !== null && <span>{err}</span>}
         </form>
         <p>
           You do have an account? <Link to="/register">Login</Link>
